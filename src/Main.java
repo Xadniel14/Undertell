@@ -38,6 +38,8 @@ public class Main {
                 System.out.println("Please Input a Valid Choice.");
             }
         }
+
+        in.nextLine(); // Consumes new line character.
     }
 
     public static void waitForResponse() {

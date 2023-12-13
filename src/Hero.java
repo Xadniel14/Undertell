@@ -32,6 +32,7 @@ public class Hero extends Entity {
         int hp = getCurrentHealth();
         if (hp <= 0) {
             System.out.printf("%s's hp dropped to %d and has fallen.%n", getName(), hp);
+            Main.waitForResponse();
         }
     }
 }
