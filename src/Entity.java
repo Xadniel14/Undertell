@@ -10,4 +10,28 @@ public abstract class Entity {
         maxHealth = health;
         this.attack = attack;
     }
+
+    protected String getName() {
+        return NAME;
+    }
+
+    protected int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    protected void takeDamage(int damage) {
+        currentHealth -= damage;
+    }
+
+    protected void heal(int health) {
+        currentHealth = Math.min(currentHealth + health, maxHealth);
+    }
+
+    protected int getMaxHealth() {
+        return maxHealth;
+    }
+
+    protected int getAttack() {
+        return attack;
+    }
 }
