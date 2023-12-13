@@ -40,6 +40,12 @@ public class Main {
         }
     }
 
+    public static void waitForResponse() {
+        System.out.println("\nPress Enter To Continue: \nType \"Exit\" if you wish to quit program.");
+
+        if (in.nextLine().equalsIgnoreCase("exit")) confirmQuit(null);
+    }
+
     public static void confirmQuit(Hero player) {
         System.out.println("Are you sure you want to quit game?");
 

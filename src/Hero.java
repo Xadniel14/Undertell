@@ -24,4 +24,14 @@ public class Hero extends Entity {
         System.out.printf("HP: %d/%d || ", getCurrentHealth(), getMaxHealth());
         System.out.printf("ATTACK: %d%n", getAttack());
     }
+
+    @Override
+    public void takeDamage(int damage) {
+        super.takeDamage(damage);
+
+        int hp = getCurrentHealth();
+        if (hp <= 0) {
+            System.out.printf("%s's hp dropped to %d and has fallen.%n", getName(), hp);
+        }
+    }
 }
