@@ -31,30 +31,13 @@ public class Main {
 
         while (true) {
             try {
-                choices[nextInt() - 1].getValue().accept(t);
+                choices[in.nextInt() - 1].getValue().accept(t);
                 break;
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (Exception e) {
+                in.nextLine();
                 System.out.println("Please Input a Valid Choice.");
             }
         }
-    }
-
-    public static int nextInt() {
-        int n;
-
-        while (true) {
-            try {
-                n = in.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Please Input A Valid Number.");
-                in.nextLine();
-            }
-        }
-
-        in.nextLine(); // Consumes '\n' character.
-
-        return n;
     }
 
     public static void confirmQuit(Hero player) {
