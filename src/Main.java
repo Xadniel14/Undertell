@@ -1,10 +1,9 @@
-import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class Main {
-    static Scanner in = new Scanner(System.in);
+    private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("Enter The Name Of Player");
@@ -52,7 +51,10 @@ public class Main {
         System.out.println("Are you sure you want to quit game?");
 
         giveChoice(null,
-                Map.entry("Yes", x -> {System.out.println("Shutting Down."); System.exit(0);}),
+                Map.entry("Yes", x -> {
+                    System.out.println("Shutting Down.");
+                    System.exit(0);
+                }),
                 Map.entry("No", x -> System.out.println("Cancelled.")));
     }
 }

@@ -1,21 +1,18 @@
-public abstract class Entity {
-    private final String NAME;
+public abstract class Entity extends GameObject {
     private int currentHealth;
     private int maxHealth;
     private int attack;
 
     protected Entity(String name, int health, int attack) {
-        NAME = name;
+        setName(name);
         currentHealth = health;
         maxHealth = health;
         this.attack = attack;
     }
 
-    protected String getName() {
-        return NAME;
-    }
+    protected abstract String getDisplayIdentifier();
 
-    protected int getCurrentHealth() {
+    public int getCurrentHealth() {
         return currentHealth;
     }
 
@@ -23,15 +20,13 @@ public abstract class Entity {
         currentHealth -= damage;
     }
 
-    protected void heal(int health) {
+    public void heal(int health) {
         currentHealth = Math.min(currentHealth + health, maxHealth);
     }
 
-    protected int getMaxHealth() {
-        return maxHealth;
-    }
-
-    protected int getAttack() {
-        return attack;
+    public void displayStatus() {
+        System.out.printf("%s: %s || ", getDisplayIdentifier(), getName());
+        System.out.printf("HP: %d/%d || ", getCurrentHealth(), maxHealth);
+        System.out.printf("ATTACK: %d%n", attack);
     }
 }

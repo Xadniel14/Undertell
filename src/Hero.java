@@ -19,10 +19,9 @@ public class Hero extends Entity {
         Hero.inventory = new HashMap<>();
     }
 
-    public void displayStatus() {
-        System.out.printf("NAME: %s || ", getName());
-        System.out.printf("HP: %d/%d || ", getCurrentHealth(), getMaxHealth());
-        System.out.printf("ATTACK: %d%n", getAttack());
+    @Override
+    protected String getDisplayIdentifier() {
+        return "NAME";
     }
 
     @Override
