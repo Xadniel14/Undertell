@@ -1,11 +1,11 @@
 public abstract class GameObject {
-    private String name;
-
-    protected String getName() {
-        return name;
+    private final String NAME;
+    
+    protected GameObject(String name) {
+        NAME = name;
     }
 
-    protected void setName(String name) {
-        this.name = name;
+    protected String getNAME() {
+        return NAME;
     }
 }

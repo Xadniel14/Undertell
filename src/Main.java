@@ -1,14 +1,17 @@
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class Main {
-    private static Scanner in = new Scanner(System.in);
+    private final static Scanner IN = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        AbstractEvent.loadEvents();
+
         System.out.println("Enter The Name Of Player");
 
-        Hero player = new Hero(in.nextLine());
+        Hero player = new Hero(IN.nextLine());
 
         while (player.getCurrentHealth() > 0) {
             player.displayStatus();
@@ -28,23 +31,30 @@ public class Main {
             System.out.printf("%d. %s%n", (i + 1), choices[i].getKey());
         }
 
+        getIntChoice(n -> choices[n - 1].getValue().accept(t));
+
+    }
+
+    public static void getIntChoice(Consumer<Integer> method) {
         while (true) {
             try {
-                choices[in.nextInt() - 1].getValue().accept(t);
+                int n = IN.nextInt();
+                IN.nextLine(); // Consumes new line character.
+
+                method.accept(n);
                 break;
-            } catch (Exception e) {
-                in.nextLine();
+            } catch (ArrayIndexOutOfBoundsException | InputMismatchException e) {
+                if (e instanceof InputMismatchException) IN.nextLine();
+
                 System.out.println("Please Input a Valid Choice.");
             }
         }
-
-        in.nextLine(); // Consumes new line character.
     }
 
     public static void waitForResponse() {
         System.out.println("\nPress Enter To Continue: \nType \"Exit\" if you wish to quit program.");
 
-        if (in.nextLine().equalsIgnoreCase("exit")) confirmQuit(null);
+        if (IN.nextLine().equalsIgnoreCase("exit")) confirmQuit(null);
     }
 
     public static void confirmQuit(Hero player) {

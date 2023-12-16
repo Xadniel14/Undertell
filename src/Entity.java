@@ -4,7 +4,7 @@ public abstract class Entity extends GameObject {
     private int attack;
 
     protected Entity(String name, int health, int attack) {
-        setName(name);
+        super(name);
         currentHealth = health;
         maxHealth = health;
         this.attack = attack;
@@ -25,7 +25,7 @@ public abstract class Entity extends GameObject {
     }
 
     public void displayStatus() {
-        System.out.printf("%s: %s || ", getDisplayIdentifier(), getName());
+        System.out.printf("%s: %s || ", getDisplayIdentifier(), getNAME());
         System.out.printf("HP: %d/%d || ", getCurrentHealth(), maxHealth);
         System.out.printf("ATTACK: %d%n", attack);
     }
