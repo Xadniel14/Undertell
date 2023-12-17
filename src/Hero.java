@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -20,7 +21,10 @@ public class Hero extends Entity {
             System.out.println("Please Enter The Name Of Item You Want To Use. Type \"Back\" to return.");
 
             String choice = in.nextLine();
-            if (choice.equalsIgnoreCase("back")) return;
+            if (choice.equalsIgnoreCase("back")) {
+                Fight.setUsedItemIsNull(true);
+                return;
+            }
 
             for (Item item : INVENTORY.keySet()) {
                 if (choice.equalsIgnoreCase(item.getNAME())) {
@@ -29,6 +33,7 @@ public class Hero extends Entity {
                 }
             }
 
+            Fight.setUsedItemIsNull(true);
             System.out.println("You don't have that item.");
         }
 
@@ -47,6 +52,8 @@ public class Hero extends Entity {
         }
     }
 
+    private boolean isDefending;
+
     private final static HashMap<Item, Integer> INVENTORY = new HashMap<>();
 
     public Hero(String name) {
@@ -58,6 +65,10 @@ public class Hero extends Entity {
         return "NAME";
     }
 
+    public void setDefending(boolean defending) {
+        isDefending = defending;
+    }
+
     @Override
     public void takeDamage(int damage) {
         super.takeDamage(damage);
@@ -67,5 +78,44 @@ public class Hero extends Entity {
             System.out.printf("%s's hp dropped to %d and has fallen.%n", getNAME(), hp);
             Main.waitForResponse();
         }
+    }
+
+    protected void attack(Enemy enemy) {
+        String attackString = "You slashed your axe and dealt";
+        int damage = getAttack();
+
+        if (Math.random() <= 0.2) {
+            damage = (int) (damage * 1.5);
+            attackString += " a critical damage of";
+        }
+
+        System.out.printf("%s: %d damage!", attackString, damage);
+
+        enemy.takeDamage(damage);
+        System.out.printf("The enemy was hit and lost: %d hp and now has: %d hp left.%n", damage, enemy.getCurrentHealth());
+    }
+
+    public void defend(Enemy enemy) {
+        System.out.println("You prepared for an attack.");
+        isDefending = true;
+    }
+
+    public void flee(boolean canFlee) {
+        if (!canFlee) {
+            System.out.println("Fleeing is impossible.");
+            Main.waitForResponse();
+
+            System.out.println("Impending doom approaches.");
+            return;
+        }
+
+        System.out.println("You Tried To Flee The Battle...");
+
+        if (Math.random() <= 0.15) {
+            System.out.println("Fled Successfully!\n");
+            System.out.println("NOTE: THERE IS NO FLEE OPTION DURING THE FINAL BATTLE.");
+            System.out.println("GUIDE: THIS IS ONLY A TEMPORARY SAFE ZONE. EXPLORING WILL RESUME THE PREVIOUS FIGHT.");
+            Fight.setDidFleeSuccessfully(true);
+        } else System.out.println("Failed to escape!");
     }
 }

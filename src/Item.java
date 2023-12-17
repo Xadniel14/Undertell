@@ -12,5 +12,5 @@ public abstract class Item extends GameObject {
         return DESCRIPTION;
     }
 
-    public abstract void onUse(Hero player);
+    public abstract void onUse(Entity player);
 }

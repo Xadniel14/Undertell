@@ -1,6 +1,7 @@
 public abstract class Entity extends GameObject {
     private int currentHealth;
     private int maxHealth;
+
     private int attack;
 
     protected Entity(String name, int health, int attack) {
@@ -14,6 +15,10 @@ public abstract class Entity extends GameObject {
 
     public int getCurrentHealth() {
         return currentHealth;
+    }
+
+    protected int getAttack() {
+        return attack;
     }
 
     protected void takeDamage(int damage) {

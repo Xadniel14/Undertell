@@ -11,7 +11,7 @@ public enum HealingItems {
             this.healingValue = healingValue;
         }
 
-        public void onUse(Hero player) {
+        public void onUse(Entity player) {
             System.out.printf("You ate: %s%n", getNAME());
             System.out.println(ON_USE_STRING);
             player.heal(healingValue);
