@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -19,7 +20,7 @@ public abstract class AbstractEvent {
 
     public static void explore(Hero player) {
         System.out.println("Exploring...");
-        EVENTS.poll().accept(player);
+        Objects.requireNonNull(EVENTS.poll()).accept(player);
         if (Fight.didFleeSuccessfully()) EVENTS.addFirst(AbstractEvent::fight);
     }
 

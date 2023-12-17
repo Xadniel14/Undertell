@@ -1,8 +1,6 @@
 import java.util.Map;
 
 public class Skeleton extends Enemy {
-    EnemyAttack[] attacks;
-
     public Skeleton() {
         super("Bones", 250, 13, "to launch a heavy attack.");
 
