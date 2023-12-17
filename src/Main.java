@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 public class Main {
     private final static Scanner IN = new Scanner(System.in);
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         AbstractEvent.loadEvents();
 
         System.out.println("Enter The Name Of Player");
@@ -14,7 +14,7 @@ public class Main {
         Hero player = new Hero(IN.nextLine());
 
         while (player.getCurrentHealth() > 0) {
-            player.displayStatus();
+            player.displayStatus(player.getAttack());
 
             System.out.println("|---------MENU---------|");
             giveChoice(player,

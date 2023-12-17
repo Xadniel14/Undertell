@@ -1,8 +1,8 @@
 public abstract class Item extends GameObject {
     private final String DESCRIPTION;
-    protected final String ON_USE_STRING;
+    public final String ON_USE_STRING;
 
-    protected Item(String name, String description, String onUseString) {
+    public Item(String name, String description, String onUseString) {
         super(name);
         DESCRIPTION = description;
         ON_USE_STRING = onUseString;
@@ -12,5 +12,8 @@ public abstract class Item extends GameObject {
         return DESCRIPTION;
     }
 
-    public abstract void onUse(Entity player);
+    public  void onUse(Hero player) {
+        System.out.printf("You ate: %s%n", getName());
+        System.out.print(ON_USE_STRING);
+    }
 }

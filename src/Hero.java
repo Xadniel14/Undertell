@@ -1,4 +1,3 @@
-import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -9,7 +8,7 @@ public class Hero extends Entity {
 
             for (Item item : INVENTORY.keySet()) {
                 int count = INVENTORY.get(item);
-                System.out.printf("%s x%d%n", item.getNAME(), count);
+                System.out.printf("%s x%d%n", item.getName(), count);
             }
 
             selectItem(player);
@@ -27,7 +26,7 @@ public class Hero extends Entity {
             }
 
             for (Item item : INVENTORY.keySet()) {
-                if (choice.equalsIgnoreCase(item.getNAME())) {
+                if (choice.equalsIgnoreCase(item.getName())) {
                     useItem(item, player);
                     return;
                 }
@@ -40,7 +39,7 @@ public class Hero extends Entity {
         public static void getItem(Item item, int count) {
             INVENTORY.merge(item, count, (k, v) -> v + count);
 
-            System.out.printf("You picked up: %s x%d%n", item.getNAME(), INVENTORY.get(item));
+            System.out.printf("You picked up: %s x%d%n", item.getName(), INVENTORY.get(item));
             System.out.println(item.getDESCRIPTION());
         }
 
@@ -61,8 +60,12 @@ public class Hero extends Entity {
     }
 
     @Override
-    protected String getDisplayIdentifier() {
+    public String getDisplayIdentifier() {
         return "NAME";
+    }
+
+    public boolean isDefending() {
+        return isDefending;
     }
 
     public void setDefending(boolean defending) {
@@ -75,12 +78,12 @@ public class Hero extends Entity {
 
         int hp = getCurrentHealth();
         if (hp <= 0) {
-            System.out.printf("%s's hp dropped to %d and has fallen.%n", getNAME(), hp);
+            System.out.printf("%s's hp dropped to %d and has fallen.%n", getName(), hp);
             Main.waitForResponse();
         }
     }
 
-    protected void attack(Enemy enemy) {
+    public void attack(Enemy enemy) {
         String attackString = "You slashed your axe and dealt";
         int damage = getAttack();
 
@@ -89,7 +92,7 @@ public class Hero extends Entity {
             attackString += " a critical damage of";
         }
 
-        System.out.printf("%s: %d damage!", attackString, damage);
+        System.out.printf("%s: %d damage!%n", attackString, damage);
 
         enemy.takeDamage(damage);
         System.out.printf("The enemy was hit and lost: %d hp and now has: %d hp left.%n", damage, enemy.getCurrentHealth());

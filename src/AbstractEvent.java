@@ -1,18 +1,21 @@
+import java.util.ArrayDeque;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.function.Consumer;
 
 public abstract class AbstractEvent {
-    private final static ArrayBlockingQueue<Consumer<Hero>> EVENTS = new ArrayBlockingQueue<>(4);
+    private final static ArrayDeque<Consumer<Hero>> EVENTS = new ArrayDeque<>();
 
-    public static void loadEvents() throws InterruptedException {
-        EVENTS.put(AbstractEvent::applesAndBeans);
-        EVENTS.put(AbstractEvent::tutorialFight);
+    public static void loadEvents()  {
+        EVENTS.addLast(AbstractEvent::applesAndBeans);
+        EVENTS.addLast(AbstractEvent::tutorialFight);
+        EVENTS.addLast(AbstractEvent::trappedRoom);
     }
 
     public static void explore(Hero player) {
         System.out.println("Exploring...");
         EVENTS.poll().accept(player);
+        if (Fight.didFleeSuccessfully()) EVENTS.addFirst(AbstractEvent::fight);
     }
 
     public static void rest(Hero player) {
@@ -44,6 +47,10 @@ public abstract class AbstractEvent {
         });
     }
 
+    public static void fight(Hero player) {
+        Fight.fight(player, Fight.getLastFledEnemy());
+    }
+
     public static void tutorialFight(Hero player) {
         Scanner in = new Scanner(System.in);
 
@@ -53,10 +60,11 @@ public abstract class AbstractEvent {
         if (!in.nextLine().equalsIgnoreCase("skip")) startTutorial(player);
 
         Fight.fight(player, new Skeleton());
+        System.out.print("\n");
     }
 
     private static void startTutorial(Hero player) {
-        System.out.println("Tutorial: You are " + player.getNAME() + " and was tasked to go gather some lumber.");
+        System.out.println("Tutorial: You are " + player.getName() + " and was tasked to go gather some lumber.");
         System.out.println("Tutorial: However, as you went to the mountain, you were struck with an unfortunate event.");
         System.out.println("As you stepped on the snowy surface of the mountain. You suddenly fell..?");
         Main.waitForResponse();
@@ -83,4 +91,45 @@ public abstract class AbstractEvent {
         System.out.println("That covers the basics of the game mechanics. Survive. See what lies within the darkness.");
         Main.waitForResponse();
     }
+
+    public static void trappedRoom(Hero player) {
+        System.out.println("Part 2 of the story will now begin...");
+        System.out.println("You continue to venture within the cavern.");
+        Main.waitForResponse();
+
+        System.out.println("As you walked through the cavern, you noticed something glowing within a room-like section of the cavern.");
+        System.out.println("You think hard to yourself, and decides: ");
+        Main.waitForResponse();
+
+        Main.giveChoice(player,
+                Map.entry("Check it out,", n -> {
+                    System.out.println("You decided to see the origin of the light.");
+                    treasureRoom(player);
+                }), Map.entry("Avoid it as it could be a trap.", n -> System.out.println("You decided to refrain from approaching it.")));
+
+        System.out.println("\nYou continued to traverse through the cavern.");
+        System.out.println("When suddenly, the wall collapses and an Armored Skeleton appeared!");
+
+        Fight.fight(player, new ArmoredSkeleton());
+
+        System.out.println("A final moment of respite before the end.\n");
+    }
+
+    public static void treasureRoom(Hero player) {
+        System.out.println("You carefully followed through the room-like section and found... an odd glowing chest.");
+        System.out.println("You looked at the chest expectantly, what will you do?\nOpen it?");
+
+        Main.giveChoice(player,
+                Map.entry("Yes", n -> {
+                    System.out.println("\nYou decided to approach the chest and open it. As you opened the chest, you feel a hot burning sensation on your right waist.");
+                    System.out.println("You've been hit by a spike trap! Lost: 80 Hp!");
+
+                    player.takeDamage(80);
+                    if (player.getCurrentHealth() <= 0) System.exit(0);
+
+                    System.out.print("Injured, but you successfully grabbed the item. ");
+                    Hero.Inventory.getItem(GoldenApple.GoldenApple, 1);
+                }), Map.entry("No", n -> System.out.println("You decided to stop at the last minute as it was too risky.")));
+    }
+
 }
