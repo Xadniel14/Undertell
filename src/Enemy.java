@@ -53,13 +53,13 @@ public abstract class Enemy extends Entity {
 
     private final String PREPARED_STRING;
 
-    public ArrayList<Map.Entry<Integer, Consumer<Hero>>> actions;
+    public final ArrayList<Map.Entry<Integer, Consumer<Hero>>> ACTIONS;
 
     public Enemy(String name, int health, int attack, String PREPARED_STRING) {
         super(name, health, attack);
         this.PREPARED_STRING = PREPARED_STRING;
 
-        actions = new ArrayList<>();
+        ACTIONS = new ArrayList<>();
         isPrepared = false;
     }
 
@@ -84,19 +84,19 @@ public abstract class Enemy extends Entity {
             double dropRoll = Math.random();
             int dropAmount = (int) (Math.random() * 3) + 1;
 
-            if (dropRoll <= 7d / 11) Hero.Inventory.getItem(HealingItems.BoneHeart.getITEM(), dropAmount);
-            else Hero.Inventory.getItem(BoneMeal.BoneMeal, dropAmount);
+            if (dropRoll <= 7d / 11) Hero.Inventory.getItem(HealingItems.BONE_HEART.getITEM(), dropAmount);
+            else Hero.Inventory.getItem(BoneMeal.BONE_MEAL, dropAmount);
 
         }
     }
 
     public void decideAction(Hero player) {
-        double unitRange = 1d / actions.stream().mapToInt(Map.Entry::getKey).reduce(0, Integer::sum);
+        double unitRange = 1d / ACTIONS.stream().mapToInt(Map.Entry::getKey).reduce(0, Integer::sum);
         double cumulativeSum = 0;
 
         double roll = Math.random();
 
-        for (Map.Entry<Integer, Consumer<Hero>> action : actions) {
+        for (Map.Entry<Integer, Consumer<Hero>> action : ACTIONS) {
             double currentChance = action.getKey() * unitRange;
 
             if (roll <= currentChance + cumulativeSum) {
@@ -108,7 +108,7 @@ public abstract class Enemy extends Entity {
         }
     }
 
-    public void prepare(Hero player) {
+    public void prepare(@SuppressWarnings("unused") Hero player) {
         System.out.printf("%s is preparing %s%n", getName(), PREPARED_STRING);
         setPrepared(true);
     }

@@ -57,7 +57,7 @@ public class Main {
         if (IN.nextLine().equalsIgnoreCase("exit")) confirmQuit(null);
     }
 
-    public static void confirmQuit(Hero player) {
+    public static void confirmQuit(@SuppressWarnings("unused") Hero player) {
         System.out.println("Are you sure you want to quit game?");
 
         giveChoice(null,

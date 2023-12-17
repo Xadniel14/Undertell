@@ -98,7 +98,7 @@ public class Hero extends Entity {
         System.out.printf("The enemy was hit and lost: %d hp and now has: %d hp left.%n", damage, enemy.getCurrentHealth());
     }
 
-    public void defend(Enemy enemy) {
+    public void defend(@SuppressWarnings("unused") Enemy enemy) {
         System.out.println("You prepared for an attack.");
         isDefending = true;
     }

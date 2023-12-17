@@ -1,6 +1,6 @@
 public class BoneMeal extends Item {
 
-    public static BoneMeal BoneMeal = new BoneMeal();
+    public final static BoneMeal BONE_MEAL = new BoneMeal();
 
     private BoneMeal() {
         super("Bone Meal", "a RARE consumable item that permanently increases your atk by 10!", "Tastes like protein...?");

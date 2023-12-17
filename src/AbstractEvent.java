@@ -38,9 +38,9 @@ public abstract class AbstractEvent {
         }
     }
 
-    public static void applesAndBeans(Hero player) {
-        pickupItem("You found something on the ground.", HealingItems.Bean.getITEM(), 1);
-        pickupItem("You see some apples on a table.", HealingItems.Apple.getITEM(), 5);
+    public static void applesAndBeans(@SuppressWarnings("unused") Hero player) {
+        pickupItem("You found something on the ground.", HealingItems.BEAN.getITEM(), 1);
+        pickupItem("You see some apples on a table.", HealingItems.APPLE.getITEM(), 5);
     }
 
     private static void pickupItem(String message, Item item, int count) {
@@ -134,10 +134,11 @@ public abstract class AbstractEvent {
                     if (player.getCurrentHealth() <= 0) System.exit(0);
 
                     System.out.print("Injured, but you successfully grabbed the item. ");
-                    Hero.Inventory.getItem(GoldenApple.GoldenApple, 1);
+                    Hero.Inventory.getItem(GoldenApple.GOLDEN_APPLE, 1);
                 }), Map.entry("No", n -> System.out.println("You decided to stop at the last minute as it was too risky.")));
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     public static void lichEvent(Hero player) {
         System.out.println("\nPart 3 of the story will now begin...\n");
         System.out.println("You wonder to yourself, \"How long has it been since I first fell on this cavern?...\"");
