@@ -6,10 +6,15 @@ import java.util.function.Consumer;
 public abstract class AbstractEvent {
     private final static ArrayDeque<Consumer<Hero>> EVENTS = new ArrayDeque<>();
 
+    public static boolean noEventsLeft() {
+        return (EVENTS.isEmpty());
+    }
+
     public static void loadEvents()  {
         EVENTS.addLast(AbstractEvent::applesAndBeans);
         EVENTS.addLast(AbstractEvent::tutorialFight);
         EVENTS.addLast(AbstractEvent::trappedRoom);
+        EVENTS.addLast(AbstractEvent::lichEvent);
     }
 
     public static void explore(Hero player) {
@@ -132,4 +137,39 @@ public abstract class AbstractEvent {
                 }), Map.entry("No", n -> System.out.println("You decided to stop at the last minute as it was too risky.")));
     }
 
+    public static void lichEvent(Hero player) {
+        System.out.println("\nPart 3 of the story will now begin...\n");
+        System.out.println("You wonder to yourself, \"How long has it been since I first fell on this cavern?...\"");
+        System.out.println("Your vision begins to blur... You are hungry and thirsty.");
+        Main.waitForResponse();
+
+        System.out.println("walking...");
+        System.out.println("You hear loud footsteps...");
+        Main.waitForResponse();
+
+        System.out.println("You looked up and was horrified in what you saw.");
+        System.out.println("Right before you, is the throne room of what seems to be an undead king.");
+        Main.waitForResponse();
+
+        System.out.println("The Undead Lich appears before you!");
+        System.out.println("You shiver in fear, but is left with no choice.");
+        Main.waitForResponse();
+
+        System.out.println("Once more, you held your battle-worn axe, as the fight begins!");
+
+        Fight.fight(player, new UndeadLich());
+
+        System.out.println("...");
+        Main.waitForResponse();
+
+        System.out.println("Did you make it, " + player.getName() + "?");
+        System.out.println("If yes, you truly are a wonderful player.");
+        Main.waitForResponse();
+
+        System.out.println("Thank you for playing :)");
+        System.out.println("This took years to do");
+        Main.waitForResponse();
+
+        System.out.println("Goodbye! :)");
+    }
 }

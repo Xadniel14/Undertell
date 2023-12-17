@@ -8,6 +8,8 @@ public class Skeleton extends Enemy {
 
         actions.add(Map.entry(5, p -> {
             if (this.isPrepared()) new EnemyAttack(0, 5, 0.1, " but gets parried", "slashes its sword", "rushed towards you and launched a heavy sword slash").accept(p);
+            if (this.isPrepared() && p.isDefending())
+                new EnemyAttack(0, 5, 0.3, " but gets parried", "slashes its sword", "rushed towards you and launched a heavy sword slash").accept(p);
             else new EnemyAttack(0, 5, 0, " but gets parried", "slashes its sword", "rushed towards you and launched a heavy sword slash").accept(p);
         }));
         actions.add(Map.entry(2, this::prepare));
@@ -19,7 +21,7 @@ public class Skeleton extends Enemy {
     public void randomHeal(Hero player) {
         int healthHealed = (int) (Math.random() * 30);
 
-        System.out.printf("The enemy consumes: ?? and healed: %d hp!", healthHealed);
+        System.out.printf("The enemy consumes: ?? and healed: %d hp!%n", healthHealed);
         super.heal(healthHealed);
     }
 }

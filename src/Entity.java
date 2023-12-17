@@ -44,7 +44,7 @@ public abstract class Entity extends GameObject {
 
     public void displayStatus(int attack) {
         System.out.printf("%s: %s || ", getDisplayIdentifier(), getName());
-        System.out.printf("HP: %d/%d || ", getCurrentHealth(), maxHealth);
+        System.out.printf("HP: %d/%d || ", getCurrentHealth(), getMaxHealth());
         System.out.printf("ATTACK: %d%n", attack);
     }
 }

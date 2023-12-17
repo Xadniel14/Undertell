@@ -13,7 +13,7 @@ public class Main {
 
         Hero player = new Hero(IN.nextLine());
 
-        while (player.getCurrentHealth() > 0) {
+        while (player.getCurrentHealth() > 0 || !AbstractEvent.noEventsLeft()) {
             player.displayStatus(player.getAttack());
 
             System.out.println("|---------MENU---------|");
