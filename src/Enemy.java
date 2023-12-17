@@ -6,12 +6,12 @@ public abstract class Enemy extends Entity {
     public class EnemyAttack implements Consumer<Hero> {
         private final int ATTACK_PENALTY;
         private final int DEFENCE_PENALTY;
-        private double MISS_CHANCE;
+        private final double MISS_CHANCE;
 
         private final String DEFENDED_SUFFIX;
 
-        private String hitString;
-        private String critString;
+        private final String hitString;
+        private final String critString;
 
         public EnemyAttack(int ATTACK_PENALTY, int DEFENCE_PENALTY, double MISS_CHANCE, String DEFENDED_SUFFIX, String hitString, String critString) {
             this.ATTACK_PENALTY = ATTACK_PENALTY;
@@ -74,6 +74,20 @@ public abstract class Enemy extends Entity {
 
     public void setPrepared(boolean prepared) {
         isPrepared = prepared;
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        super.takeDamage(damage);
+
+        if (this.getCurrentHealth() <= 0) {
+            double dropRoll = Math.random();
+            int dropAmount = (int) (Math.random() * 3) + 1;
+
+            if (dropRoll <= 7d / 11) Hero.Inventory.getItem(HealingItems.BoneHeart.getITEM(), dropAmount);
+            else Hero.Inventory.getItem(BoneMeal.BoneMeal, dropAmount);
+
+        }
     }
 
     public void decideAction(Hero player) {
